@@ -42,10 +42,7 @@ class DetailFragment : Fragment() {
     }
 
     fun viewSetup(){
-        fab_list.setOnClickListener {
-            val action = DetailFragmentDirections.actionGoToList()
-            Navigation.findNavController(it).navigate(action)
-        }
+
     }
 
 }
