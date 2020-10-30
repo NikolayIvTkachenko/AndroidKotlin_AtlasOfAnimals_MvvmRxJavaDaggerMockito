@@ -75,7 +75,6 @@ class ListFragment : Fragment() {
         viewModel.loadError.observe(viewLifecycleOwner, loadErrorLiveDataObserver)
         viewModel.refresh()
 
-
     }
 
     fun viewSetup(){
@@ -89,7 +88,8 @@ class ListFragment : Fragment() {
             rv_animals.visibility = View.GONE
             tv_error.visibility = View.GONE
             pb_loading.visibility = View.VISIBLE
-            viewModel.refresh()
+            //viewModel.refresh()
+            viewModel.hardRefresh()
             refresh_layout.isRefreshing = false
         }
     }

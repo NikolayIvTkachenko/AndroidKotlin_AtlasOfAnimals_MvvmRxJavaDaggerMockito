@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.rsh_engineering.tkachenkoni.atlasofanimals.R
 import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.util.getProgressDrawable
+import com.rsh_engineering.tkachenkoni.atlasofanimals.util.loadImage
 import kotlinx.android.synthetic.main.item_animal.view.*
 
 /**
@@ -37,9 +40,13 @@ class ItemAnimalAdapter (val context: Context) : RecyclerView.Adapter<ItemAnimal
     }
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
-        holder.view.iv_animal.setImageDrawable(
-            ContextCompat.getDrawable(context, R.drawable.ic_launcher_background))
+        holder.view.iv_animal.loadImage(list[position].imageUrl, getProgressDrawable(context))
         holder.view.tv_animal_name.text = list[position].name
+        holder.itemView.setOnClickListener {viewitem ->
+
+            val action = ListFragmentDirections.actionGoToDetail(list[position])
+            Navigation.findNavController(viewitem).navigate(action)
+        }
     }
 
     override fun getItemCount() = list.size

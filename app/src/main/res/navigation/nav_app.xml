@@ -28,5 +28,8 @@
             app:destination="@id/listFragment"
             app:enterAnim="@anim/from_left"
             app:exitAnim="@anim/to_right" />
+        <argument
+            android:name="animal"
+            app:argType="com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel" />
     </fragment>
 </navigation>

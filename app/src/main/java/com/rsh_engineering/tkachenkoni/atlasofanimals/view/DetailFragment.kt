@@ -7,16 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.rsh_engineering.tkachenkoni.atlasofanimals.R
+import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.util.getProgressDrawable
+import com.rsh_engineering.tkachenkoni.atlasofanimals.util.loadImage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_list.*
 
 
 class DetailFragment : Fragment() {
 
+    var animal : AnimalModel? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
+            animal = DetailFragmentArgs.fromBundle(it).animal
         }
     }
 
@@ -42,7 +47,11 @@ class DetailFragment : Fragment() {
     }
 
     fun viewSetup(){
-
+        iv_animal_detail.loadImage(animal?.imageUrl, getProgressDrawable(requireContext()))
+        tv_animal_name_detail.text = animal?.name
+        tv_animal_location.text = animal?.location
+        tv_animal_lifespan.text = animal?.lifeSpan
+        tv_animal_diet.text = animal?.diet
     }
 
 }

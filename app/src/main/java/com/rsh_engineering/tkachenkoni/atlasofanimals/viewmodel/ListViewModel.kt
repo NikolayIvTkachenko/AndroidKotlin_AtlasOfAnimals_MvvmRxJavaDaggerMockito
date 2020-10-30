@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.rsh_engineering.tkachenkoni.atlasofanimals.data.NetworkApiService
 import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
 import com.rsh_engineering.tkachenkoni.atlasofanimals.model.ApiKey
+import com.rsh_engineering.tkachenkoni.atlasofanimals.util.SharedPreferencesHelper
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -30,7 +31,22 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     private val disposable = CompositeDisposable()
     private val apiNetwork = NetworkApiService()
 
+    private val prefs = SharedPreferencesHelper(getApplication())
+
+    private var invalidApiKey = false
+
     fun refresh(){
+        loading.value = true
+        invalidApiKey = false
+        val key = prefs.getApiKey()
+        if(key.isNullOrEmpty()){
+            getKey()
+        }else{
+            getAnimals(key)
+        }
+    }
+
+    fun hardRefresh(){
         loading.value = true
         getKey()
     }
@@ -46,6 +62,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
                             loadError.value = true
                             loading.value = false
                         }else{
+                            prefs.saveApiKey(key.key)
                             getAnimals(key.key)
                         }
                     }
@@ -75,16 +92,23 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
                     }
 
                     override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                        loading.value = false
-                        animals.value = null
-                        loadError.value = true
+                        if(!invalidApiKey){
+                            invalidApiKey = true
+                            getKey()
+                        }else{
+                            e.printStackTrace()
+                            loading.value = false
+                            animals.value = null
+                            loadError.value = true
+                        }
+
                     }
 
                 })
         )
-
     }
+
+
 
 
     override fun onCleared() {

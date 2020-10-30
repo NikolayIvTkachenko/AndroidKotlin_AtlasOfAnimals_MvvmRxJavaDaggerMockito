@@ -1,5 +1,7 @@
 package com.rsh_engineering.tkachenkoni.atlasofanimals.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -31,7 +33,42 @@ data class AnimalModel(
     val lifeSpan: String?,
     @SerializedName("image")
     val imageUrl: String?
-)
+) : Parcelable{
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readParcelable(Taxonomy::class.java.classLoader),
+        parcel.readString(),
+        parcel.readParcelable(Speed::class.java.classLoader),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(name)
+        parcel.writeParcelable(taxonomy, flags)
+        parcel.writeString(location)
+        parcel.writeParcelable(speed, flags)
+        parcel.writeString(diet)
+        parcel.writeString(lifeSpan)
+        parcel.writeString(imageUrl)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<AnimalModel> {
+        override fun createFromParcel(parcel: Parcel): AnimalModel {
+            return AnimalModel(parcel)
+        }
+
+        override fun newArray(size: Int): Array<AnimalModel?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
 
 data class Taxonomy(
     @SerializedName("kingdom")
@@ -40,11 +77,63 @@ data class Taxonomy(
     val order: String?,
     @SerializedName("family")
     val family: String?
-)
+) : Parcelable{
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(kingdom)
+        parcel.writeString(order)
+        parcel.writeString(family)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Taxonomy> {
+        override fun createFromParcel(parcel: Parcel): Taxonomy {
+            return Taxonomy(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Taxonomy?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
 
 data class Speed(
     @SerializedName("metric")
     val metric : String?,
     @SerializedName("imperial")
     val imperial : String?
-)
+) : Parcelable{
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(metric)
+        parcel.writeString(imperial)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Speed> {
+        override fun createFromParcel(parcel: Parcel): Speed {
+            return Speed(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Speed?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
