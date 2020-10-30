@@ -4,7 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.data.NetworkApiService
 import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.model.ApiKey
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 
 /**
  *
@@ -20,25 +27,86 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     val loadError by lazy {MutableLiveData<Boolean>()}
     val loading by lazy {MutableLiveData<Boolean>()}
 
+    private val disposable = CompositeDisposable()
+    private val apiNetwork = NetworkApiService()
+
     fun refresh(){
-        getAnimals()
+        loading.value = true
+        getKey()
     }
 
-    private fun getAnimals(){
-        val a1 = AnimalModel("alligator")
-        val a2 = AnimalModel("cat")
-        val a3 = AnimalModel("bee")
-        val a4 = AnimalModel("dog")
-        val a5 = AnimalModel("elephant")
-        val a6 = AnimalModel("tiger")
-        val a7 = AnimalModel("flaming")
+    private fun getKey(){
+        disposable.add(
+            apiNetwork.getApiKey()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object: DisposableSingleObserver<ApiKey>(){
+                    override fun onSuccess(key: ApiKey) {
+                        if(key.key.isNullOrEmpty()){
+                            loadError.value = true
+                            loading.value = false
+                        }else{
+                            getAnimals(key.key)
+                        }
+                    }
 
-        val animalList = arrayListOf(a1, a2, a3, a4, a5, a6, a7)
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                        loading.value = false
+                        loadError.value = true
+                    }
 
-        animals.value = animalList
-        loadError.value = false
-        loading.value = false
+                })
+        )
+    }
+
+
+    private fun getAnimals(key:String){
+
+        disposable.add(
+            apiNetwork.getAnimals(key)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object: DisposableSingleObserver<List<AnimalModel>>(){
+                    override fun onSuccess(list: List<AnimalModel>) {
+                        loadError.value = false
+                        animals.value = list
+                        loading.value = false
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                        loading.value = false
+                        animals.value = null
+                        loadError.value = true
+                    }
+
+                })
+        )
 
     }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
+    }
+
+
+//    private fun getAnimals(){
+//        val a1 = AnimalModel("alligator")
+//        val a2 = AnimalModel("cat")
+//        val a3 = AnimalModel("bee")
+//        val a4 = AnimalModel("dog")
+//        val a5 = AnimalModel("elephant")
+//        val a6 = AnimalModel("tiger")
+//        val a7 = AnimalModel("flaming")
+//
+//        val animalList = arrayListOf(a1, a2, a3, a4, a5, a6, a7)
+//
+//        animals.value = animalList
+//        loadError.value = false
+//        loading.value = false
+//    }
 
 }
