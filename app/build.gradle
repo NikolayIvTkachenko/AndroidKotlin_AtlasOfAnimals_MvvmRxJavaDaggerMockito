@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 29
@@ -21,16 +23,55 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding.enabled = true
 }
+
+def lifecycleExtVer = '1.1.1'
+def supportVer = '28.0.0'
+def retrofitVer = '2.6.2'
+def glideVer = '4.10.0'
+def rxJavaVer = '2.2.10'
+def rxAndrVer = '2.1.1'
+def navVer = '2.3.1'
+def daggerVer = '2.23.2'
+def mockitoVer = '2.11.0'
+
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+
+    implementation "com.android.support:design:$supportVer"
+    implementation "android.arch.lifecycle:extensions:$lifecycleExtVer"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVer"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVer"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVer"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVer"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVer"
+
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVer"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndrVer"
+
+    implementation "com.github.bumptech.glide:glide:$glideVer"
+    implementation "com.android.support:palette-v7:$supportVer"
+
+    implementation "com.google.dagger:dagger:$daggerVer"
+    implementation "com.google.dagger:dagger-android-support:$daggerVer"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt "com.google.dagger:dagger-compiler:$daggerVer"
+
+
+    testImplementation "org.mockito:mockito-inline:$mockitoVer"
+    testImplementation "android.arch.core:core-testing:1.1.1"
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
 }
