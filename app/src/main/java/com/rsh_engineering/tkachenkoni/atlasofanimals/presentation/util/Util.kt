@@ -1,4 +1,4 @@
-package com.rsh_engineering.tkachenkoni.atlasofanimals.util
+package com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.util
 
 import android.content.Context
 import android.widget.ImageView

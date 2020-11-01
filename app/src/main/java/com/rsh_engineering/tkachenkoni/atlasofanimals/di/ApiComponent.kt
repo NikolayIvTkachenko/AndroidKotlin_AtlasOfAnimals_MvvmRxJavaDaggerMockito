@@ -1,7 +1,6 @@
 package com.rsh_engineering.tkachenkoni.atlasofanimals.di
 
-import com.rsh_engineering.tkachenkoni.atlasofanimals.data.NetworkApi
-import com.rsh_engineering.tkachenkoni.atlasofanimals.data.NetworkApiService
+import com.rsh_engineering.tkachenkoni.atlasofanimals.data.api.NetworkApiService
 import dagger.Component
 
 /**

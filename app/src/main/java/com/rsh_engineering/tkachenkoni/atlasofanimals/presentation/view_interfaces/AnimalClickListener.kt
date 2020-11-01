@@ -1,4 +1,4 @@
-package com.rsh_engineering.tkachenkoni.atlasofanimals.view_interfaces
+package com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.view_interfaces
 
 import android.view.View
 

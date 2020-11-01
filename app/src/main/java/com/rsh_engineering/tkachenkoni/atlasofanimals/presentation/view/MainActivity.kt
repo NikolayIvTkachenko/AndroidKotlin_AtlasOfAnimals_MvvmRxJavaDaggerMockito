@@ -1,4 +1,4 @@
-package com.rsh_engineering.tkachenkoni.atlasofanimals.view
+package com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

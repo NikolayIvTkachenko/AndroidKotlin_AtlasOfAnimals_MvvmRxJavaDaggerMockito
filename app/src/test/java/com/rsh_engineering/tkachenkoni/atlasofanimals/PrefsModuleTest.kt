@@ -2,7 +2,7 @@ package com.rsh_engineering.tkachenkoni.atlasofanimals
 
 import android.app.Application
 import com.rsh_engineering.tkachenkoni.atlasofanimals.di.PrefsModule
-import com.rsh_engineering.tkachenkoni.atlasofanimals.util.SharedPreferencesHelper
+import com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.util.SharedPreferencesHelper
 
 /**
  *

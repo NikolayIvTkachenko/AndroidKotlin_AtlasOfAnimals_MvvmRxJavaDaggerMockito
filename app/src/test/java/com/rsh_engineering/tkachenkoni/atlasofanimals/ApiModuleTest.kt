@@ -1,6 +1,6 @@
 package com.rsh_engineering.tkachenkoni.atlasofanimals
 
-import com.rsh_engineering.tkachenkoni.atlasofanimals.data.NetworkApiService
+import com.rsh_engineering.tkachenkoni.atlasofanimals.data.api.NetworkApiService
 import com.rsh_engineering.tkachenkoni.atlasofanimals.di.ApiModule
 
 /**

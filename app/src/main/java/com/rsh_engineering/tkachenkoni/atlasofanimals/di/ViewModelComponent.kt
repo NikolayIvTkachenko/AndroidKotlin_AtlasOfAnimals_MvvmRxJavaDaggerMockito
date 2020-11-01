@@ -1,6 +1,6 @@
 package com.rsh_engineering.tkachenkoni.atlasofanimals.di
 
-import com.rsh_engineering.tkachenkoni.atlasofanimals.viewmodel.ListViewModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.viewmodel.ListViewModel
 import dagger.Component
 import javax.inject.Singleton
 

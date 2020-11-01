@@ -1,8 +1,8 @@
 package com.rsh_engineering.tkachenkoni.atlasofanimals.di
 
 import com.rsh_engineering.tkachenkoni.atlasofanimals.BASE_URL
-import com.rsh_engineering.tkachenkoni.atlasofanimals.data.NetworkApi
-import com.rsh_engineering.tkachenkoni.atlasofanimals.data.NetworkApiService
+import com.rsh_engineering.tkachenkoni.atlasofanimals.data.api.NetworkApi
+import com.rsh_engineering.tkachenkoni.atlasofanimals.data.api.NetworkApiService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -30,7 +30,7 @@ open class ApiModule {
     }
 
     @Provides
-    open fun provideNetworkApiService() : NetworkApiService{
+    open fun provideNetworkApiService() : NetworkApiService {
         return NetworkApiService()
     }
 

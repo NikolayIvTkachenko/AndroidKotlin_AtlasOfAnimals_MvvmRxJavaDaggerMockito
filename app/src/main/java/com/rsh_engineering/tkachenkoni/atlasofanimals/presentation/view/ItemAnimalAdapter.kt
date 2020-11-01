@@ -1,20 +1,16 @@
-package com.rsh_engineering.tkachenkoni.atlasofanimals.view
+package com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.view
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.rsh_engineering.tkachenkoni.atlasofanimals.R
 import com.rsh_engineering.tkachenkoni.atlasofanimals.databinding.ItemAnimalBinding
-import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
-import com.rsh_engineering.tkachenkoni.atlasofanimals.util.getProgressDrawable
-import com.rsh_engineering.tkachenkoni.atlasofanimals.util.loadImage
-import com.rsh_engineering.tkachenkoni.atlasofanimals.view_interfaces.AnimalClickListener
-import kotlinx.android.synthetic.main.item_animal.view.*
+import com.rsh_engineering.tkachenkoni.atlasofanimals.domain.model.AnimalModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.view_interfaces.AnimalClickListener
 
 /**
  *

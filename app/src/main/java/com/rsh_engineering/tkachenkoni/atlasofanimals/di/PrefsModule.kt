@@ -2,7 +2,7 @@ package com.rsh_engineering.tkachenkoni.atlasofanimals.di
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
-import com.rsh_engineering.tkachenkoni.atlasofanimals.util.SharedPreferencesHelper
+import com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.util.SharedPreferencesHelper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier

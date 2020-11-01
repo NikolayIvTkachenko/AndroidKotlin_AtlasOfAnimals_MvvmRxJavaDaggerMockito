@@ -1,7 +1,7 @@
-package com.rsh_engineering.tkachenkoni.atlasofanimals.data
+package com.rsh_engineering.tkachenkoni.atlasofanimals.data.api
 
-import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
-import com.rsh_engineering.tkachenkoni.atlasofanimals.model.ApiKey
+import com.rsh_engineering.tkachenkoni.atlasofanimals.domain.model.AnimalModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.domain.model.ApiKey
 import io.reactivex.Single
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

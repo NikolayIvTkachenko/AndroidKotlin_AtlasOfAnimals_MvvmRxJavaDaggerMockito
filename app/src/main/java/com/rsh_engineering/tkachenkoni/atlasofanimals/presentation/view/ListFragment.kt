@@ -1,4 +1,4 @@
-package com.rsh_engineering.tkachenkoni.atlasofanimals.view
+package com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.rsh_engineering.tkachenkoni.atlasofanimals.R
-import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
-import com.rsh_engineering.tkachenkoni.atlasofanimals.viewmodel.ListViewModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.domain.model.AnimalModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
 
 

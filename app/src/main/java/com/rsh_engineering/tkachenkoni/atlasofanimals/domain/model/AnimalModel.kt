@@ -1,4 +1,4 @@
-package com.rsh_engineering.tkachenkoni.atlasofanimals.model
+package com.rsh_engineering.tkachenkoni.atlasofanimals.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -2,13 +2,13 @@ package com.rsh_engineering.tkachenkoni.atlasofanimals
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.rsh_engineering.tkachenkoni.atlasofanimals.data.NetworkApiService
+import com.rsh_engineering.tkachenkoni.atlasofanimals.data.api.NetworkApiService
 import com.rsh_engineering.tkachenkoni.atlasofanimals.di.AppModule
 import com.rsh_engineering.tkachenkoni.atlasofanimals.di.DaggerViewModelComponent
-import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
-import com.rsh_engineering.tkachenkoni.atlasofanimals.model.ApiKey
-import com.rsh_engineering.tkachenkoni.atlasofanimals.util.SharedPreferencesHelper
-import com.rsh_engineering.tkachenkoni.atlasofanimals.viewmodel.ListViewModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.domain.model.AnimalModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.domain.model.ApiKey
+import com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.util.SharedPreferencesHelper
+import com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.viewmodel.ListViewModel
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -119,6 +119,7 @@ class ListViewModelTest {
         val animal = AnimalModel("cow", null, null, null, null, null, null)
         val animalsList = listOf(animal)
         val testSingle = Single.just(animalsList)
+
         Mockito.`when`(networService.getAnimals(key)).thenReturn(testSingle)
 
         listViewModel.refresh()
@@ -130,9 +131,12 @@ class ListViewModelTest {
     @Test
     fun getKeyFailure() {
         Mockito.`when`(prefs.getApiKey()).thenReturn(null)
+
         val keySingle = Single.error<ApiKey>(Throwable())
         Mockito.`when`(networService.getApiKey()).thenReturn(keySingle)
+
         listViewModel.refresh()
+
         Assert.assertEquals(null, listViewModel.animals.value)
         Assert.assertEquals(false, listViewModel.loading.value)
         Assert.assertEquals(true, listViewModel.loadError.value)

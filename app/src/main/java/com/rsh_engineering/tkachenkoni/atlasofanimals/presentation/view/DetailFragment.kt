@@ -1,8 +1,6 @@
-package com.rsh_engineering.tkachenkoni.atlasofanimals.view
+package com.rsh_engineering.tkachenkoni.atlasofanimals.presentation.view
 
-import android.R.attr.bitmap
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -13,18 +11,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.rsh_engineering.tkachenkoni.atlasofanimals.R
 import com.rsh_engineering.tkachenkoni.atlasofanimals.databinding.FragmentDetailBinding
-import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
-import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalePalette
-import com.rsh_engineering.tkachenkoni.atlasofanimals.util.getProgressDrawable
-import com.rsh_engineering.tkachenkoni.atlasofanimals.util.loadImage
+import com.rsh_engineering.tkachenkoni.atlasofanimals.domain.model.AnimalModel
 
 
 class DetailFragment : Fragment() {
