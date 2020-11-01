@@ -15,6 +15,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+        repositories {
+            mavenCentral()
+        }
+
     }
 
     buildTypes {
@@ -24,7 +32,9 @@ android {
         }
     }
 
-    dataBinding.enabled = true
+
+
+    //dataBinding.enabled = true
 }
 
 def lifecycleExtVer = '1.1.1'
@@ -36,6 +46,7 @@ def rxAndrVer = '2.1.1'
 def navVer = '2.3.1'
 def daggerVer = '2.23.2'
 def mockitoVer = '2.11.0'
+def multidex_version = "2.0.1"
 
 
 dependencies {
@@ -60,18 +71,26 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndrVer"
 
     implementation "com.github.bumptech.glide:glide:$glideVer"
+    //implementation 'com.android.support:support-v7:28.0.0'
+    //implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation "com.android.support:palette-v7:$supportVer"
+    kapt "com.github.bumptech.glide:compiler:$glideVer"
 
     implementation "com.google.dagger:dagger:$daggerVer"
     implementation "com.google.dagger:dagger-android-support:$daggerVer"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "com.google.dagger:dagger-compiler:$daggerVer"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVer"
 
 
     testImplementation "org.mockito:mockito-inline:$mockitoVer"
     testImplementation "android.arch.core:core-testing:1.1.1"
+    kaptTest "com.google.dagger:dagger-compiler:$daggerVer"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
+    implementation "androidx.multidex:multidex:$multidex_version"
 }
