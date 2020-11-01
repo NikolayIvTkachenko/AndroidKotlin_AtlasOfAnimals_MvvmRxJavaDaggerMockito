@@ -80,7 +80,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     private fun getKey(){
         disposable.add(
             apiNetwork.getApiKey()
-                .subscribeOn(Schedulers.io()) 
+                .subscribeOn(Schedulers.io())
                 //.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object: DisposableSingleObserver<ApiKey>(){
