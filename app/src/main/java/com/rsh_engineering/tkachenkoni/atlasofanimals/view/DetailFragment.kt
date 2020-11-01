@@ -2,6 +2,7 @@ package com.rsh_engineering.tkachenkoni.atlasofanimals.view
 
 import android.R.attr.bitmap
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +12,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.rsh_engineering.tkachenkoni.atlasofanimals.R
 import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
@@ -64,9 +69,40 @@ class DetailFragment : Fragment() {
     fun viewSetupBackgroundColor(){
         animal?.imageUrl?.let { url ->
             Log.d("COLORPALETTE", " url = $url")
-            Glide.with(this)
+            Glide.with(requireActivity())
                 .asBitmap()
                 .load(url)
+//                .listener(object : RequestListener<Bitmap> {
+//                    override fun onLoadFailed(
+//                        e: GlideException?,
+//                        model: Any?,
+//                        target: Target<Bitmap>?,
+//                        isFirstResource: Boolean
+//                    ): Boolean {
+//                        Log.d("COLORPALETTE", " onLoadFailed")
+//                        return false
+//                    }
+//
+//                    override fun onResourceReady(
+//                        resource: Bitmap?,
+//                        model: Any?,
+//                        target: Target<Bitmap>?,
+//                        dataSource: DataSource?,
+//                        isFirstResource: Boolean
+//                    ): Boolean {
+//                        Log.d("COLORPALETTE", " onResourceReady")
+//                        resource?.let {
+//                            val palImg = Palette.from(it).generate()
+//                            val intColor = palImg?.lightMutedSwatch?.rgb ?: 0
+//                            Log.d("COLORPALETTE", " iniColor = $intColor")
+//                            ll_animal_detail.setBackgroundColor(intColor)
+//
+//                            return true
+//                        }
+//                        return false
+//                    }
+//
+//                })
                 .into(object : CustomTarget<Bitmap>() {
 
                     override fun onResourceReady(
@@ -76,18 +112,22 @@ class DetailFragment : Fragment() {
 
                         Log.d("COLORPALETTE", " resource = $resource")
                         Log.d("COLORPALETTE", " resource.byteCount = ${resource.byteCount}")
+                        val palette = Palette.from(resource).generate(object : Palette.PaletteAsyncListener{
+                            override fun onGenerated(palette: Palette?) {
+                                palette?.let {
+                                    val defaultColor = 0
+                                    val intColor = it.getDarkMutedColor(defaultColor)
+                                    //ll_animal_detail.setBackgroundColor(intColor)
+                                }
 
-//                        val palImg = Palette.from(resource).generate()
-//                        val intColor = palImg?.lightMutedSwatch?.rgb ?: 0
+                            }
+                        })
 
-//                        ll_animal_detail.setBackgroundColor(intColor)
-                        //Log.d("COLORPALETTE", " iniColor = $intColor")
-
-                        val palette = Palette.from(resource).generate()
-                        val defaultColor = -0xcccccd
-                        val color = palette.getDarkMutedColor(defaultColor)
-                        //ll_animal_detail.setBackgroundColor(color)
-
+//                        val palette = Palette.from(resource).generate()
+//                        val defaultColor = 0
+//                        val intColor = palette.getDarkMutedColor(defaultColor)
+//                        //ll_animal_detail.setBackgroundColor(color)
+//                        Log.d("COLORPALETTE", " iniColor = $intColor")
 
                         //val imageViewTarget = GlideDrawableImageViewTarget(load)
                         //val mutableBitmap = Bitmap.createBitmap(resource.width, resource.height, Bitmap.Config.RGB_565)
