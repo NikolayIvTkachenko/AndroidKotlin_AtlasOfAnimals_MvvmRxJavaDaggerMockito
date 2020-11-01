@@ -58,7 +58,7 @@ class ItemAnimalAdapter (val context: Context) : RecyclerView.Adapter<ItemAnimal
     override fun getItemCount() = list.size
 
     override fun onClick(v: View) {
-        
+
         for(animal in list){
             if(v.tag == animal.name){
                 val action = ListFragmentDirections.actionGoToDetail(animal)
