@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
@@ -19,15 +20,17 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.rsh_engineering.tkachenkoni.atlasofanimals.R
+import com.rsh_engineering.tkachenkoni.atlasofanimals.databinding.FragmentDetailBinding
 import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalModel
+import com.rsh_engineering.tkachenkoni.atlasofanimals.model.AnimalePalette
 import com.rsh_engineering.tkachenkoni.atlasofanimals.util.getProgressDrawable
 import com.rsh_engineering.tkachenkoni.atlasofanimals.util.loadImage
-import kotlinx.android.synthetic.main.fragment_detail.*
 
 
 class DetailFragment : Fragment() {
 
     var animal : AnimalModel? = null
+    private lateinit var databinding: FragmentDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +43,8 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_detail, container, false)
-
-        return view
+        databinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
+        return databinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,18 +54,16 @@ class DetailFragment : Fragment() {
 
     }
 
-
     fun initUI(){
+
+        databinding.animalmodel = animal
+
         viewSetup()
         viewSetupBackgroundColor()
     }
 
     fun viewSetup(){
-        iv_animal_detail.loadImage(animal?.imageUrl, getProgressDrawable(requireContext()))
-        tv_animal_name_detail.text = animal?.name
-        tv_animal_location.text = animal?.location
-        tv_animal_lifespan.text = animal?.lifeSpan
-        tv_animal_diet.text = animal?.diet
+        //databinding.ivAnimalDetail.loadImage(animal?.imageUrl, getProgressDrawable(requireContext()))
     }
 
     fun viewSetupBackgroundColor(){
@@ -72,60 +72,20 @@ class DetailFragment : Fragment() {
             Glide.with(requireActivity())
                 .asBitmap()
                 .load(url)
-//                .listener(object : RequestListener<Bitmap> {
-//                    override fun onLoadFailed(
-//                        e: GlideException?,
-//                        model: Any?,
-//                        target: Target<Bitmap>?,
-//                        isFirstResource: Boolean
-//                    ): Boolean {
-//                        Log.d("COLORPALETTE", " onLoadFailed")
-//                        return false
-//                    }
-//
-//                    override fun onResourceReady(
-//                        resource: Bitmap?,
-//                        model: Any?,
-//                        target: Target<Bitmap>?,
-//                        dataSource: DataSource?,
-//                        isFirstResource: Boolean
-//                    ): Boolean {
-//                        Log.d("COLORPALETTE", " onResourceReady")
-//                        resource?.let {
-//                            val palImg = Palette.from(it).generate()
-//                            val intColor = palImg?.lightMutedSwatch?.rgb ?: 0
-//                            Log.d("COLORPALETTE", " iniColor = $intColor")
-//                            ll_animal_detail.setBackgroundColor(intColor)
-//
-//                            return true
-//                        }
-//                        return false
-//                    }
-//
-//                })
+
                 .into(object : CustomTarget<Bitmap>() {
 
                     override fun onResourceReady(
                         resource: Bitmap,
                         transition: Transition<in Bitmap>?
                     ) {
-
-                        Log.d("COLORPALETTE", " resource = $resource")
-                        Log.d("COLORPALETTE", " resource.byteCount = ${resource.byteCount}")
-//                        val palette = Palette.from(resource).generate(object : Palette.PaletteAsyncListener{
-//                            override fun onGenerated(palette: Palette?) {
-//                                palette?.let {
-//                                    val defaultColor = 0
-//                                    val intColor = it.getDarkMutedColor(defaultColor)
-//                                    //ll_animal_detail.setBackgroundColor(intColor)
-//                                }
-//
-//                            }
-//                        })
                         Palette.from(resource).generate{ pal ->
                             val intColor = pal?.lightMutedSwatch?.rgb ?: 0
                             Log.d("COLORPALETTE", " iniColor = $intColor")
-                            //ll_animal_detail.setBackgroundColor(intColor)
+                            //databinding.llAnimalDetail.setBackgroundColor(intColor)
+
+                            //databinding.palette = AnimalePalette(intColor)
+
                         }
 
                     }
