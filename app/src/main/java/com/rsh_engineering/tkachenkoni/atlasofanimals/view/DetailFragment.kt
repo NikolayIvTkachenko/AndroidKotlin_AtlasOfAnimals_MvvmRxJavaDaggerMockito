@@ -112,35 +112,22 @@ class DetailFragment : Fragment() {
 
                         Log.d("COLORPALETTE", " resource = $resource")
                         Log.d("COLORPALETTE", " resource.byteCount = ${resource.byteCount}")
-                        val palette = Palette.from(resource).generate(object : Palette.PaletteAsyncListener{
-                            override fun onGenerated(palette: Palette?) {
-                                palette?.let {
-                                    val defaultColor = 0
-                                    val intColor = it.getDarkMutedColor(defaultColor)
-                                    //ll_animal_detail.setBackgroundColor(intColor)
-                                }
-
-                            }
-                        })
-
-//                        val palette = Palette.from(resource).generate()
-//                        val defaultColor = 0
-//                        val intColor = palette.getDarkMutedColor(defaultColor)
-//                        //ll_animal_detail.setBackgroundColor(color)
-//                        Log.d("COLORPALETTE", " iniColor = $intColor")
-
-                        //val imageViewTarget = GlideDrawableImageViewTarget(load)
-                        //val mutableBitmap = Bitmap.createBitmap(resource.width, resource.height, Bitmap.Config.RGB_565)
-
-//                        {palette ->
-//                                val intColor = palette?.lightMutedSwatch?.rgb ?: 0
-//                                Log.d("COLORPALETTE", " iniColor = $intColor")
-//                                ll_animal_detail.setBackgroundColor(intColor)
-////                                ll_animal_detail?.let {
-////                                    //it.setBackgroundColor()
-////                                }
+//                        val palette = Palette.from(resource).generate(object : Palette.PaletteAsyncListener{
+//                            override fun onGenerated(palette: Palette?) {
+//                                palette?.let {
+//                                    val defaultColor = 0
+//                                    val intColor = it.getDarkMutedColor(defaultColor)
+//                                    //ll_animal_detail.setBackgroundColor(intColor)
+//                                }
 //
 //                            }
+//                        })
+                        Palette.from(resource).generate{ pal ->
+                            val intColor = pal?.lightMutedSwatch?.rgb ?: 0
+                            Log.d("COLORPALETTE", " iniColor = $intColor")
+                            //ll_animal_detail.setBackgroundColor(intColor)
+                        }
+
                     }
 
                     override fun onLoadCleared(placeholder: Drawable?) {
