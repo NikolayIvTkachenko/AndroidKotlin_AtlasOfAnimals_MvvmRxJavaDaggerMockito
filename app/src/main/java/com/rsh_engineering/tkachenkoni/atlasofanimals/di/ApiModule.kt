@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 
 @Module
-class ApiModule {
+open class ApiModule {
 
 
     @Provides
@@ -30,7 +30,7 @@ class ApiModule {
     }
 
     @Provides
-    fun provideNetworkApiService() : NetworkApiService{
+    open fun provideNetworkApiService() : NetworkApiService{
         return NetworkApiService()
     }
 

@@ -1,6 +1,7 @@
 package com.rsh_engineering.tkachenkoni.atlasofanimals.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,7 +22,13 @@ import javax.inject.Inject
  * Created by Nikolay Tkachenko on 30, October, 2020
  *
  */
+
 class ListViewModel(application: Application): AndroidViewModel(application) {
+
+    constructor(application: Application, test: Boolean = true): this(application){
+        injected = test
+    }
+
 
     val animals by lazy{
         MutableLiveData<List<AnimalModel>>()
@@ -41,14 +48,19 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
 
     private var invalidApiKey = false
 
-    init {
-        DaggerViewModelComponent.builder()
-            .appModule(AppModule(getApplication()))
-            .build()
-            .inject(this)
+    private var injected = false
+
+    fun inject() {
+        if(!injected) {
+            DaggerViewModelComponent.builder()
+                .appModule(AppModule(getApplication()))
+                .build()
+                .inject(this)
+        }
     }
 
     fun refresh(){
+        inject()
         loading.value = true
         invalidApiKey = false
         val key = prefs.getApiKey()
@@ -60,6 +72,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun hardRefresh(){
+        inject()
         loading.value = true
         getKey()
     }
@@ -67,7 +80,8 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
     private fun getKey(){
         disposable.add(
             apiNetwork.getApiKey()
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io()) 
+                //.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object: DisposableSingleObserver<ApiKey>(){
                     override fun onSuccess(key: ApiKey) {
@@ -96,6 +110,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
         disposable.add(
             apiNetwork.getAnimals(key)
                 .subscribeOn(Schedulers.io())
+                //.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object: DisposableSingleObserver<List<AnimalModel>>(){
                     override fun onSuccess(list: List<AnimalModel>) {
